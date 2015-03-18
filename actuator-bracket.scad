@@ -13,6 +13,8 @@ hole_sup = 2.0*2 + screw_hole;
 wall = 2.0;
 
 tab_len = 1.0;
+tab_wid = 1.0;
+tab_height = 3.0;
 plung_ex = 7.6;
 
 plate_length = sol_length + plung_ex + 2 + 4.5 + 2;
@@ -31,6 +33,8 @@ copy_other_side_trans = [0, sol_width + hole_sup + 2*tab_len, 0];
 screw_hole_1_trans = hole_support_1_trans + [0, 0, -2.0];
 screw_hole_2_trans = hole_support_2_trans + [0, 0, -2.0];
 
+tab_dim = [tab_wid, tab_len+0.5, tab_height+0.5];
+
 module hole_support()
 {
    cylinder(h=sol_height/2+0.5, d=hole_sup, $fn=60);  
@@ -39,6 +43,11 @@ module hole_support()
 module screw_hole()
 {
    cylinder(h=sol_height/2+2.0+1, d=screw_hole, $fn=60);
+}
+
+module tab()
+{
+    cube(tab_dim);  
 }
 
 difference()
@@ -52,6 +61,13 @@ difference()
     {
       translate(hole_support_1_trans) { hole_support(); } //3
       translate(hole_support_2_trans) { hole_support(); } //4
+    }
+    translate(hole_support_1_trans + [-tab_wid/2, hole_sup/2-0.5, 0]) { tab(); }
+    translate(hole_support_2_trans + [-tab_wid/2, hole_sup/2-0.5, 0]) { tab(); }
+    translate(copy_other_side_trans)
+    {
+      translate(hole_support_1_trans + [-tab_wid/2, -tab_len-0.5 -(hole_sup/2-0.5), 0]) { tab(); }
+      translate(hole_support_2_trans + [-tab_wid/2, -tab_len-0.5 -(hole_sup/2-0.5), 0]) { tab(); }
     }
   }     // end of union
   translate(screw_hole_1_trans)  { screw_hole(); }  //1
