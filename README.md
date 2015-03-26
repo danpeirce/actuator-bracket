@@ -22,3 +22,5 @@ Note alignment tabs are visible.
 This is what the 3D model looks like from one angle.
 
 ![](images/3d-model.png)
+	
+...or it can be viewed at any angle at [3D-model/actuator-bracket.stl](3D-model/actuator-bracket.stl).
